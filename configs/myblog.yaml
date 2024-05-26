@@ -18,3 +18,5 @@ log:
   format: console
   output-paths: [/tmp/myblog.log, stdout]
 
+addr: :8080 # HTTP 服务器监听地址
+
