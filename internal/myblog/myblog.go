@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/ivancheng/myblog/internal/pkg/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -17,6 +18,10 @@ func NewMiniBlogCommand() *cobra.Command {
 		Long:         `A good Go practical project, used to create user with basic information.`,
 		SilenceUsage: true,
 		RunE: func(cmd *cobra.Command, args []string) error {
+			// 初始化日志
+			log.Init(logOptions())
+			defer log.Sync() // Sync 将缓存中的日志刷新到磁盘文件中
+
 			return run()
 		},
 		Args: func(cmd *cobra.Command, args []string) error {
@@ -44,11 +49,10 @@ func NewMiniBlogCommand() *cobra.Command {
 
 // run 函数是实际的业务代码入口函数.
 func run() error {
-	fmt.Println("Hello MiniBlog!")
 	// 打印所有的配置项及其值
 	settings, _ := json.Marshal(viper.AllSettings())
-	fmt.Println(string(settings))
+	log.Infow(string(settings))
 	// 打印 db -> username 配置项的值
-	fmt.Println(viper.GetString("db.username"))
+	log.Infow(viper.GetString("db.username"))
 	return nil
 }
