@@ -3,7 +3,7 @@ testdata_dir = "testdata"
 tmp_dir = "tmp"
 
 [build]
-  args_bin = []
+  args_bin = ["-c", "configs/miniblog.yaml"]
   bin = "_output/myblog"
   cmd = "go build -o _output/myblog -v cmd/myblog/main.go"
   delay = 1000
