@@ -8,6 +8,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/ivancheng/myblog/internal/pkg/log"
+	"github.com/ivancheng/myblog/internal/pkg/middleware"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -58,14 +59,25 @@ func run() error {
 	// 打印 db -> username 配置项的值
 	log.Infow(viper.GetString("db.username"))
 
+	// 初始化store层
+	if err := initStore(); err != nil {
+		return err
+	}
+
 	gin.SetMode(viper.GetString("runmode"))
 	g := gin.New()
+
+	// 加载中间件
+	mws := []gin.HandlerFunc{gin.Recovery(), middleware.NoCache, middleware.Cors, middleware.Secure}
+	g.Use(mws...)
+
 	g.NoRoute(func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"code": 10003, "message": "Page not found."})
 	})
 	g.GET("/healthz", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"status": "ok"})
 	})
+
 	// 创建 HTTP Server 实例
 	httpsrv := &http.Server{Addr: viper.GetString("addr"), Handler: g}
 	log.Infow("Start to listening the incoming requests on http address", "addr", viper.GetString("addr"))
