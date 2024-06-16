@@ -71,12 +71,9 @@ func run() error {
 	mws := []gin.HandlerFunc{gin.Recovery(), middleware.NoCache, middleware.Cors, middleware.Secure}
 	g.Use(mws...)
 
-	g.NoRoute(func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"code": 10003, "message": "Page not found."})
-	})
-	g.GET("/healthz", func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"status": "ok"})
-	})
+	if err := installRouters(g); err != nil {
+		return err
+	}
 
 	// 创建 HTTP Server 实例
 	httpsrv := &http.Server{Addr: viper.GetString("addr"), Handler: g}

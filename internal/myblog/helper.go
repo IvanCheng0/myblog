@@ -14,7 +14,7 @@ import (
 
 const (
 	// recommendedHomeDir 定义放置 miniblog 服务配置的默认目录.
-	recommendedHomeDir = ".myblog"
+	recommendedHomeDir = "myblog"
 
 	// defaultConfigName 指定了 miniblog 服务的默认配置文件名.
 	defaultConfigName = "myblog.yaml"
@@ -46,7 +46,7 @@ func initConfig() {
 	// 读取匹配的环境变量
 	viper.AutomaticEnv()
 
-	// 读取环境变量的前缀为 MINIBLOG，如果是 miniblog，将自动转变为大写。
+	// 读取环境变量的前缀为 MYBLOG，如果是 myblog，将自动转变为大写。
 	viper.SetEnvPrefix("MYBLOG")
 
 	// 将 viper.Get(key) key 字符串中 '.' 和 '-' 替换为 '_'

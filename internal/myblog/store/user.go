@@ -23,5 +23,5 @@ func newUser(db *gorm.DB) *users {
 }
 
 func (u *users) Create(ctx context.Context, user *model.UserM) error {
-    return u.db.Create(&user).Error
+	return u.db.Create(&user).Error
 }

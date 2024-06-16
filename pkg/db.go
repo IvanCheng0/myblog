@@ -46,9 +46,9 @@ func NewMySQL(opts *MySQLOptions) (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-    
+
 	sqlDB.SetMaxOpenConns(opts.MaxOpenConnections)
 	sqlDB.SetConnMaxLifetime(opts.MaxConnectionLifeTime)
-    sqlDB.SetMaxIdleConns(opts.MaxIdleConnections)
-    return db, nil
+	sqlDB.SetMaxIdleConns(opts.MaxIdleConnections)
+	return db, nil
 }
