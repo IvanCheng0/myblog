@@ -14,7 +14,7 @@ import (
 
 const (
 	// recommendedHomeDir 定义放置 miniblog 服务配置的默认目录.
-	recommendedHomeDir = "myblog"
+	recommendedHomeDir = ".myblog"
 
 	// defaultConfigName 指定了 miniblog 服务的默认配置文件名.
 	defaultConfigName = "myblog.yaml"
